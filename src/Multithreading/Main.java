@@ -44,6 +44,8 @@ public class Main {
             System.out.println("Main zaid+"+i);
         }
       thread.isAlive();
+        thread.interrupt();
+        thread.join();
 
     }
 }
