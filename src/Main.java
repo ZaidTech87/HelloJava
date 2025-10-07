@@ -1,17 +1,28 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Date;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
+        // Create Workspace and Gmail account
+        Workspace workspace = new Workspace("user@gmail.com");
 
-        Email obj = new  Email("mz3284704","Zaid@123");
-        System.out.println(obj.changePassword("Zaid@123","Asif$123"));
-        System.out.println(obj.changePassword("Asif$123","Asif"));
-        System.out.println(obj.changePassword("Asif$123","Zfgfdid@13"));
-        System.out.println(obj.changePassword("Zaid@123","ashijd"));
-        System.out.println(obj.changePassword("Zaid@123","Asif$123"));
+        // Create and receive mails
+        workspace.receiveMail(new Mail(new Date(), "sender1@gmail.com", "Hello!"));
+        workspace.receiveMail(new Mail(new Date(), "sender2@gmail.com", "Meeting Reminder"));
 
+        System.out.println("Inbox size: " + workspace.inboxSize());
+        System.out.println("Latest mail: " + workspace.findLatestMail());
 
+        // Delete a mail
+        workspace.deleteMail("Hello!");
+        System.out.println("Inbox size after delete: " + workspace.inboxSize());
+        System.out.println("Trash size: " + workspace.trashSize());
+
+        // Add meetings
+        workspace.addMeeting(new Meeting(new Date(System.currentTimeMillis() + 1000 * 60 * 60),
+                new Date(System.currentTimeMillis() + 1000 * 60 * 120)));
+        workspace.addMeeting(new Meeting(new Date(System.currentTimeMillis() + 1000 * 60 * 30),
+                new Date(System.currentTimeMillis() + 1000 * 60 * 90)));
+
+        System.out.println("Max meetings you can attend: " + workspace.findMaxMeeting());
     }
 }

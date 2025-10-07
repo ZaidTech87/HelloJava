@@ -1,101 +1,69 @@
 public class Email {
-    String email_Id ;
-    String email_password ;
+    private String emailId;
+    private String emailPassword;
 
-    public Email(String email_Id, String email_password) {
-        this.email_Id = email_Id;
-        this.email_password = "Zaid@123";
-    }
-    public String getEmail_Id() {
-        return email_Id;
-    }
-    public void setEmail_Id(String email_Id) {
-        this.email_Id = email_Id;
-
-    }
-    public String getEmail_password() {
-        return email_password;
-
-    }
-    public void setEmail_password(String email_password) {
-        this.email_password = email_password;
-
+    public Email(String emailId, String emailPassword) {
+        this.emailId = emailId;
+        this.emailPassword = "Zaid@123"; // Default password
     }
 
-    boolean isUpperCaseme(String pass){
-        for(Character ch : pass.toCharArray()){
-            if(Character.isUpperCase(ch)){
-                return true;
-            }
+    public String getEmailId() {
+        return emailId;
+    }
 
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
+
+    public String getEmailPassword() {
+        return emailPassword;
+    }
+
+    public void setEmailPassword(String emailPassword) {
+        this.emailPassword = emailPassword;
+    }
+
+    private boolean hasUpperCase(String pass) {
+        for (char ch : pass.toCharArray()) {
+            if (Character.isUpperCase(ch)) return true;
         }
         return false;
     }
-    boolean isLowerCaseme(String pass){
-        for(Character ch : pass.toCharArray()){
-            if(Character.isLowerCase(ch)){
-                return true;
-            }
+
+    private boolean hasLowerCase(String pass) {
+        for (char ch : pass.toCharArray()) {
+            if (Character.isLowerCase(ch)) return true;
         }
         return false;
     }
-    boolean isDigit(String pass){
-        for(Character ch : pass.toCharArray()){
-            if(Character.isDigit(ch)){
-                return true;
-            }
+
+    private boolean hasDigit(String pass) {
+        for (char ch : pass.toCharArray()) {
+            if (Character.isDigit(ch)) return true;
         }
         return false;
     }
-    boolean isSpecialChar(String pass){
-        for(Character ch : pass.toCharArray()){
-            if(!Character.isLetterOrDigit(ch) && !Character.isWhitespace(ch)){
-                return true;
-            }
+
+    private boolean hasSpecialChar(String pass) {
+        for (char ch : pass.toCharArray()) {
+            if (!Character.isLetterOrDigit(ch) && !Character.isWhitespace(ch)) return true;
         }
         return false;
     }
-public  boolean checkValidation(String new_password){
 
-        if(new_password.length()<8){
-            return false;
-        }
-        else if(!isUpperCaseme(new_password)){
-            return false;
-        }
-        else if(!isLowerCaseme(new_password)){
-            return false;
-        }
-         else if(!isDigit(new_password)){
-             return false;
-        }
-         else if(!isSpecialChar(new_password)){
-             return false;
-        }
-         return true;
+    public boolean validatePassword(String newPassword) {
+        return newPassword.length() >= 8 && hasUpperCase(newPassword) && hasLowerCase(newPassword)
+                && hasDigit(newPassword) && hasSpecialChar(newPassword);
+    }
 
-
+    public String changePassword(String oldPassword, String newPassword) {
+        if (!oldPassword.equals(this.emailPassword)) {
+            return "Old password does not match. Cannot set new password.";
+        }
+        if (validatePassword(newPassword)) {
+            this.emailPassword = newPassword;
+            return "Password changed successfully to: " + newPassword;
+        }
+        return "Password must be at least 8 chars long and include uppercase, lowercase, digit, and special character.";
+    }
 }
-
-
-    public String changePassword(String old_passowrd,String new_passoword){
-
-        if(!old_passowrd.equals(getEmail_password())){
-           return "your password does not match previos password you cant make new password";
-
-        }
-        if(checkValidation(new_passoword)){
-                this.email_password = new_passoword;
-                return "Password changed successfully new password  " + new_passoword;
-
-            }
-
-        return "Password must contain 1 upper case 1 lowercase 1 special characters only";
-
-        }
-
-
-    }
-
-
-
